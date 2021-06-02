@@ -1,0 +1,1 @@
+web: gunicorn TutoEscom.wsgi --log-file -
