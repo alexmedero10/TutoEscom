@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'TutoEscom.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL')
+        default=env('DATABASE_URL')
     )
 }
 
