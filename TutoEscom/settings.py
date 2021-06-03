@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'TutoEscom.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('postgres://fdunfyrggoskxf:666e6eb0bcea61b8cc3ccf007fbfcec78753495ed58b7734c98376105ccad7c7@ec2-3-214-136-47.compute-1.amazonaws.com:5432/db6g5ibaahtjbm')
+        default=config('DATABASE_URL')
     )
 }
 
