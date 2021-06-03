@@ -37,7 +37,7 @@
 	<!-------------------------------------
 					Navigation Bar 
 	-------------------------------------->
-	<div class="main">
+	<div class="main2">
 		
 		<nav class="second-nav">
 			{% if request.user.is_authenticated %}
@@ -45,13 +45,8 @@
 			<a class="new" href="{% url 'post' %}">Crear nuevo post</a>
 			{% endif %}
 		</nav>
-
-
 		{% block content %}
-
 		{% endblock content %}
-
-
 
 	</div>
 
