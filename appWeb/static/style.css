@@ -147,6 +147,7 @@ time {
 
 .post{
 	font-size: .94rem;
+  word-wrap: break-word;
 }
 
 /* PROFILE */

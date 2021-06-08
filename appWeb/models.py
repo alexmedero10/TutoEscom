@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+from django.db.models.signals import post_save
 
 
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	image = models.ImageField(default='batman.png')
+	image = models.ImageField(upload_to='fotoPerfil', default='escom.png')
 
 	def __str__(self):
 		return f'Perfil de {self.user.username}'
@@ -20,7 +20,6 @@ class Profile(models.Model):
 		user_ids = Relationship.objects.filter(to_user=self.user)\
 								.values_list('from_user_id', flat=True)
 		return User.objects.filter(id__in=user_ids)
-
 
 class Post(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')

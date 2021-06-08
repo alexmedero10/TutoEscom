@@ -4,6 +4,7 @@ from .forms import UserRegisterForm, PostForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+import os
 
 def feed(request):
 	posts = Post.objects.all()
@@ -13,7 +14,9 @@ def feed(request):
 
 def register(request):
 	if request.method == 'POST':
-		form = UserRegisterForm(request.POST)
+		form = UserRegisterForm(request.POST, request.FILES)
+		form.image = request.FILES['image']
+		print("FIle:"+ str(request.FILES))
 		if form.is_valid():
 			form.save()
 			username = form.cleaned_data['username']

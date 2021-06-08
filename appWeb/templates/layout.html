@@ -2,9 +2,9 @@
 {% load static %}
 <html>
 <head>
-	<title>Django Social</title>
+	<title>TutoESCOM</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="{% static 'normalize.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 </head>
@@ -34,15 +34,12 @@
 		{% endfor %}
 	{% endif %}
 
-	<!-------------------------------------
-					Navigation Bar 
-	-------------------------------------->
 	<div class="main2">
 		
 		<nav class="second-nav">
 			{% if request.user.is_authenticated %}
 			<a class="profile" href="{% url 'profile' request.user.username %}">Mi Perfil</a>
-			<a class="new" href="{% url 'post' %}">Crear nuevo post</a>
+			<a class="new" href="{% url 'post' %}">Nuevo post</a>
 			{% endif %}
 		</nav>
 		{% block content %}
