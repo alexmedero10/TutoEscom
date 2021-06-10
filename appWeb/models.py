@@ -11,6 +11,10 @@ class Profile(models.Model):
 	def __str__(self):
 		return f'Perfil de {self.user.username}'
 
+	def likes(self):
+		users = Like.objects.filter(user_id=self.user).values_list('post_id', flat=True)
+		return users
+
 	def following(self):
 		user_ids = Relationship.objects.filter(from_user=self.user)\
 								.values_list('to_user_id', flat=True)
@@ -25,6 +29,8 @@ class Post(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
 	timestamp = models.DateTimeField(default=timezone.now)
 	content = models.TextField()
+	likes = models.PositiveIntegerField(default=0)
+	user_likes = models.ManyToManyField(User)
 
 	class Meta:
 		ordering = ['-timestamp']
@@ -42,7 +48,19 @@ class Relationship(models.Model):
 
 	class Meta:
 		indexes = [
-		models.Index(fields=['from_user', 'to_user',]),
+		models.Index(fields=['from_user', 'to_user']),
 		]
 
 
+class Like(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="likeUsers")
+	post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likePosts")
+	alreadyLiked = models.BooleanField(default=False)
+
+	def __str__(self):
+		return f"{self.user} liked {self.post}"
+	
+	class Meta:
+		indexes = [
+		models.Index(fields=['user', 'post']),
+		]

@@ -136,6 +136,39 @@ article{
   border-radius: 50%;
 }
 
+.container-article-actions{
+  display: flex;
+  padding: 5px 0;
+  border-bottom: 2px solid #ECEEEF;
+}
+
+.container-article-actions img{
+  height: 25px;
+  width: 25px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.button-actions{
+	padding: 0.1rem 0.1rem;
+	background: #016597;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.container-article-comment{
+  display: flex;
+  margin-left: 2rem;
+  margin-top: 0.5rem;
+}
+
+.container-article-comment img{
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
 article:last-child {
   border-bottom: 0;
 }

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-from .forms import UserRegisterForm, PostForm
+from .forms import UserRegisterForm, UserImageForm, PostForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -14,18 +14,23 @@ def feed(request):
 
 def register(request):
 	if request.method == 'POST':
-		form = UserRegisterForm(request.POST, request.FILES)
-		form.image = request.FILES['image']
-		print("FIle:"+ str(request.FILES))
-		if form.is_valid():
-			form.save()
+		form = UserRegisterForm(request.POST)
+		profile_form = UserImageForm(request.POST, request.FILES)
+		if form.is_valid() and profile_form.is_valid():
+			user = form.save()
+			profile_form = profile_form.save(commit=False)
+			profile_form.user = user
+			if 'image' in request.FILES:
+				profile_form.image = request.FILES['image']
+			profile_form.save()
 			username = form.cleaned_data['username']
 			messages.success(request, f'Usuario {username} creado')
 			return redirect('feed')
 	else:
 		form = UserRegisterForm()
+		profile_form = UserImageForm()
 
-	context = { 'form' : form }
+	context = { 'form' : form, 'profile_form': profile_form}
 	return render(request, 'register.html', context)
 
 @login_required
@@ -43,7 +48,32 @@ def post(request):
 		form = PostForm()
 	return render(request, 'post.html', {'form' : form })
 
+def like(request, post_id):
+	user = User.objects.get(username=request.user.username)
+	post = Post.objects.get(id=post_id)
 
+	newLike = Like(user=user, post=post)
+	newLike.alreadyLiked = True
+
+	post.likes += 1
+	#adds user to Post 
+	post.user_likes.add(user)
+	post.save()
+	newLike.save()
+	messages.success(request, f'Te gusta la publicación')
+	return redirect('feed')
+
+def dislike(request, post_id):
+	user = User.objects.get(username=request.user.username)
+	post = Post.objects.get(id=post_id)
+	deleteLike = Like.objects.filter(user=user.id, post=post.id).get()
+	post.user_likes.remove(user)
+	post.likes -= 1
+	post.save()
+	#delete user from Post 
+	deleteLike.delete()
+	messages.success(request, f'Ya no te gusta la publicación')
+	return redirect('feed')
 
 def profile(request, username=None):
 	current_user = request.user

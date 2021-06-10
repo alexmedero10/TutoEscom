@@ -13,6 +13,30 @@
             <div class="post">{{ post.content }}</div>
         </div>
     </div>
+
+    <div class="container-article-actions">
+        {% if request.user.is_authenticated %}
+			{% if post.id not in user.profile.likes %}
+            <button class="button-actions"><a href="{% url 'like' post.id %}"><img src="/media/like.PNG"></a></button>
+            {% else %}
+            <button class="button-actions"><a href="{% url 'dislike' post.id %}"><img src="/media/like.PNG"></a></button>
+            {% endif %}
+        {% else %}
+        <button class="button-actions"><a href="{% url 'login' %}"><img src="/media/like.PNG"></a></button>
+        {% endif %}
+        <p style="padding-right: 0.7rem;">{{ post.likes }}</p>
+        <button class="button-actions"><img src="/media/comment.PNG"></button>
+    </div>
+    <!--
+    <div class="container-article-comment">
+        <img src="{{ post.user.profile.image.url }}">
+        <div>
+            <h2 class="username"><a href="{% url 'profile' post.user.username %}">@{{ post.user.username }}</a></h2>
+            <i class="clock"></i>
+            <time data-time="#">{{ post.timestamp|naturaltime }}</time>
+            <div class="post">{{ post.content }}</div>
+        </div>
+    </div>-->
 </article>
 
 {% endfor %}
