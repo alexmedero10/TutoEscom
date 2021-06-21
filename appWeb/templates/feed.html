@@ -1,42 +1,48 @@
 {% extends 'layout.html' %}
 {% load humanize %}
+{% load filters %}
 {% block content %}
 
 {% for post in posts %}
 <article>
     <div class="container-article">
         <img src="{{ post.user.profile.image.url }}">
-        <div>
+        <div> 
             <h2 class="username"><a href="{% url 'profile' post.user.username %}">@{{ post.user.username }}</a></h2>
             <i class="clock"></i>
-            <time data-time="#">{{ post.timestamp|naturaltime }}</time>
+            <time data-time="#" style="color:white;">{{ post.timestamp|naturaltime }}</time>
             <div class="post">{{ post.content }}</div>
         </div>
     </div>
 
     <div class="container-article-actions">
         {% if request.user.is_authenticated %}
-			{% if post.id not in user.profile.likes %}
+            {% if post.id not in user.profile.likes %}
             <button class="button-actions"><a href="{% url 'like' post.id %}"><img src="/media/like.PNG"></a></button>
             {% else %}
             <button class="button-actions"><a href="{% url 'dislike' post.id %}"><img src="/media/like.PNG"></a></button>
             {% endif %}
+            <p style="padding-right: 0.7rem;">{{ post.likes }}</p>
+            <button class="button-actions"><a href="{% url 'comment' post.id %}"><img src="/media/comment.PNG"></button>
+            <p style="padding-right: 0.7rem; color:black">{{ post.user_comments.count }}</p>    
         {% else %}
         <button class="button-actions"><a href="{% url 'login' %}"><img src="/media/like.PNG"></a></button>
-        {% endif %}
         <p style="padding-right: 0.7rem;">{{ post.likes }}</p>
-        <button class="button-actions"><img src="/media/comment.PNG"></button>
+        <button class="button-actions"><a href="{% url 'login' %}"><img src="/media/comment.PNG"></button>
+        <p style="padding-right: 0.7rem; color:black">{{ post.user_comments.count }}</p>    
+        {% endif %}    
     </div>
-    <!--
+
+    {% for comment in post|getComments:post.id %}
     <div class="container-article-comment">
-        <img src="{{ post.user.profile.image.url }}">
         <div>
-            <h2 class="username"><a href="{% url 'profile' post.user.username %}">@{{ post.user.username }}</a></h2>
             <i class="clock"></i>
-            <time data-time="#">{{ post.timestamp|naturaltime }}</time>
-            <div class="post">{{ post.content }}</div>
+            <time data-time="#">{{ comment.timestamp|naturaltime }}</time>
+            <div class="comment">{{ comment.content }}</div>
         </div>
-    </div>-->
+    </div>
+    {% endfor %}
+
 </article>
 
 {% endfor %}

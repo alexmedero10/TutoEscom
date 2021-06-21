@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Post, Profile
+from .models import Comment, Post, Profile
 
 class UserRegisterForm(UserCreationForm):
 	email = forms.EmailField()
@@ -24,4 +24,11 @@ class PostForm(forms.ModelForm):
 
 	class Meta:
 		model = Post
+		fields = ['content']
+
+class CommentForm(forms.ModelForm):
+	content = forms.CharField(label='', widget=forms.Textarea(attrs={'rows':2, 'placeholder': 'Responder'}), required=True)
+
+	class Meta:
+		model = Comment
 		fields = ['content']

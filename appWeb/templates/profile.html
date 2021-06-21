@@ -9,9 +9,9 @@
 	{% if request.user.is_authenticated %}
 		{% if user.username != request.user.username %}
 			{% if user not in request.user.profile.following %}
-			<button><a class="follow-button" href="{% url 'follow' user %}">Follow</a></button>
+			<button><a class="follow-button" href="{% url 'follow' user %}">Seguir</a></button>
 			{% else %}
-			<button><a class="follow-button" href="{% url 'unfollow' user %}">Unfollow</a></button>
+			<button><a class="follow-button" href="{% url 'unfollow' user %}">Dejar de seguir</a></button>
 			{% endif %}
 		{% endif %}
 	{% endif %}

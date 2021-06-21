@@ -181,6 +181,13 @@ time {
 .post{
 	font-size: .94rem;
   word-wrap: break-word;
+  color: black;
+}
+
+.comment{
+	font-size: .94rem;
+  word-wrap: break-word;
+  color: white;
 }
 
 /* PROFILE */

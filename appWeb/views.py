@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-from .forms import UserRegisterForm, UserImageForm, PostForm
+from .forms import UserRegisterForm, UserImageForm, PostForm, CommentForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -47,6 +47,26 @@ def post(request):
 	else:
 		form = PostForm()
 	return render(request, 'post.html', {'form' : form })
+
+def comment(request, post_id):
+	if request.method == 'POST':
+		form = CommentForm(request.POST)
+		if form.is_valid():
+			user = User.objects.get(username=request.user.username)
+			post = Post.objects.get(id=post_id)
+
+			newComment = form.save(commit=False)
+			newComment.user = user
+			newComment.post = post
+			post.user_comments.add(user)
+			post.save()
+			newComment.save()
+
+			messages.success(request, 'Comentario enviado')
+			return redirect('feed')
+	else:
+		form = CommentForm()
+	return render(request, 'comment.html', {'form' : form })
 
 def like(request, post_id):
 	user = User.objects.get(username=request.user.username)
