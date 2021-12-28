@@ -1,0 +1,18 @@
+{
+  "python.pythonPath": "C:\\Users\\alexg\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\\python.exe",
+  "C_Cpp_Runner.cCompilerPath": "C:\\MinGW\\bin\\gcc.exe",
+  "C_Cpp_Runner.cppCompilerPath": "C:\\MinGW\\bin\\g++.exe",
+  "C_Cpp_Runner.warnings": [
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic"
+  ],
+  "C_Cpp_Runner.compilerArgs": [],
+  "C_Cpp_Runner.includePaths": [],
+  "C_Cpp_Runner.linkerArgs": [],
+  "C_Cpp_Runner.cStandard": "",
+  "C_Cpp_Runner.cppStandard": "",
+  "C_Cpp_Runner.excludeSearch": [],
+  "C_Cpp_Runner.enableWarnings": true,
+  "C_Cpp_Runner.warningsAsError": false
+}
